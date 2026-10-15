@@ -10,4 +10,6 @@ same($p->decide(0, 0, true, true), 'rejected', 'invalid-capacity');
 same($p->decide(10, -1, true, true), 'rejected', 'invalid-count');
 same($p->decide(10, 11, true, true), 'rejected', 'corrupt-over-count');
 same($p->decide(1, 0, true, false), 'confirmed', 'first-seat');
+// Ca bo sung do sinh vien: suc chua am cung la du lieu khong hop le.
+same($p->decide(-1, 0, true, true), 'rejected', 'negative-capacity');
 finish();
