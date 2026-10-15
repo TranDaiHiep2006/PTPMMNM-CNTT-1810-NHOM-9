@@ -1,0 +1,8 @@
+.local/
+*.log
+.env
+env.local.sh
+# Bản HUONG_DAN.md lưu local trong Ma_nguon (bản gốc đã có ở /lab1/HUONG_DAN.md và được git track).
+HUONG_DAN.md
+# Alternate Data Stream của Windows (NTFS) — không phải file thật trên Linux.
+*:Zone.Identifier
