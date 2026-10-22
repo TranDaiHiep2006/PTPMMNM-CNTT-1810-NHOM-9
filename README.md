@@ -1,55 +1,41 @@
-# PTPMMNM-CNTT-1810-NHOM-9 — Bài tập thực hành
+# Lab 05 — Lưu, truy vấn và thống kê đăng ký với MySQL
 
-Kho mã chứa 3 bài thực hành môn **Phát triển phần mềm mã nguồn mở** của nhóm 9. Mỗi bài nằm trên một **branch riêng** để giữ lịch sử commit độc lập theo yêu cầu nộp bài.
+Đây là lựa chọn MySQL của Lab 05. Dùng PHP >= 8.1, MySQL >= 8.0.16, MySQLi và mysqlnd trên Ubuntu/WSL. Không cần cài PostgreSQL để làm bản này.
 
-## Danh sách bài
+Đọc [hướng dẫn MySQL đầy đủ](../HUONG_DAN_MYSQL.md) để cài công cụ, tạo tài khoản/CSDL riêng và học từng bước. Bản PostgreSQL vẫn nằm trong `../Ma_nguon`.
 
-| Bài | Tên đề tài | Branch | Xem trên GitHub |
-| --- | --- | --- | --- |
-| Lab 01 | Vận hành dự án trên Linux và viết shell script | [`lab1`](../../tree/lab1) | [Mở branch lab1](../../tree/lab1) |
-| Lab 02 | Xây dựng module PHP kiểm tra điều kiện đăng ký | [`lab2`](../../tree/lab2) | [Mở branch lab2](../../tree/lab2) |
-| Lab 03 | Hiển thị sự kiện, tìm kiếm và xử lý form | [`lab3`](../../tree/lab3) | [Mở branch lab3](../../tree/lab3) |
-
-> **Mặc định GitHub đang mở branch `main`.** Hãy chuyển sang branch tương ứng ở góc trên bên trái (nút branch dropdown) để xem mã nguồn của từng bài.
-
-## Cách chuyển branch
-
-Trên giao diện GitHub: nhìn lên đầu trang, ngay phía trên danh sách file, có nút hiển thị branch hiện tại (mặc định là `main`). Bấm vào đó rồi chọn `lab1`, `lab2` hoặc `lab3`.
-
-Trên terminal (sau khi clone):
+Mở terminal Ubuntu/WSL tại thư mục chứa `lab.sh`, sau khi tạo CSDL và tài khoản theo hướng dẫn:
 
 ```bash
-git clone https://github.com/TranDaiHiep2006/PTPMMNM-CNTT-1810-NHOM-9.git
-cd PTPMMNM-CNTT-1810-NHOM-9
-git checkout lab1   # hoặc lab2, lab3
+bash lab.sh db-config
+bash lab.sh check
+bash lab.sh sql
 ```
 
-## Tóm tắt nội dung từng bài
+Client SQL hỏi lại mật khẩu. Trong client:
 
-### Lab 01 — Vận hành dự án trên Linux và shell script *(branch `lab1`)*
+```sql
+source database/schema.sql;
+SELECT id, title FROM events ORDER BY id;
+exit
+```
 
-Làm quen với môi trường dòng lệnh Ubuntu/WSL, chạy shell script `lab.sh`, kiểm tra môi trường và chạy chương trình PHP mẫu trên cổng `8101`.
-
-### Lab 02 — Module PHP kiểm tra điều kiện đăng ký *(branch `lab2`)*
-
-Hoàn thiện lớp `RegistrationPolicy` kiểm tra điều kiện đăng ký sự kiện (dung lượng, sự kiện đóng/mở, danh sách chờ) và bộ kiểm thử biên. Máy chủ chạy trên cổng `8102`.
-
-### Lab 03 — Hiển thị sự kiện, tìm kiếm và xử lý form *(branch `lab3`)*
-
-Trang danh sách sự kiện có bộ lọc kết hợp theo **từ khóa + loại + còn chỗ** (AND), Form đăng ký kiểm tra phía máy chủ và hiển thị bản xem trước. Máy chủ chạy trên cổng `8103`.
+Trở về Bash:
 
 ```bash
-bash lab.sh check   # kiểm tra môi trường
-bash lab.sh test    # kiểm thử phần mẫu
-bash lab.sh extend  # kiểm thử phần mở rộng
+php demo-db.php
+bash lab.sh run
 ```
 
-## Công cụ chung
+Mở http://127.0.0.1:8105/register.php. Giữ terminal máy chủ mở, Ctrl+C để dừng. Chỉ chạy một phiên bản lab trên cổng 8105 tại một thời điểm. Dùng terminal thứ hai ở cùng thư mục để kiểm thử:
 
-- PHP 8.1 trở lên
-- Git
-- Terminal Ubuntu hoặc Ubuntu trong WSL
+```bash
+bash lab.sh test
+bash lab.sh extend
+```
 
-## Thành viên
+`test` cần `TESTS=6 FAILED=0`, `TESTS=7 FAILED=0` và `TESTS=9 FAILED=0`; `extend` cần `TESTS=4 FAILED=0` sau khi sinh viên tự hoàn thiện TODO trong `src/RegistrationStats.php`. `NOT_RUN` là chưa kiểm thử được. Không sửa test để bỏ qua lỗi.
 
-Nhóm 9 — CNTT 1810.
+Ghi rõ lựa chọn MySQL và phiên bản PHP/MySQL trong bài nộp. Giữ mã nguồn, schema, dữ liệu mẫu và test; không đưa `.local`, mật khẩu hoặc dữ liệu cá nhân thật vào Git/ZIP. Không dùng cấu hình hoặc schema PostgreSQL cho bản này.
+
+Giao diện, form, CSRF, Session/Cookie và khu UI demo giống bản PostgreSQL. Các trang `ui-demo.php`/`ticket-preview.php` dùng dữ liệu hư cấu, không ghi CSDL và không chứng minh đăng ký thật. Mẫu chưa kiểm soát giới hạn chỗ khi nhiều request đăng ký đồng thời.
