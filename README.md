@@ -1,55 +1,55 @@
-# PTPMMNM-CNTT-1810-NHOM-9 — Bài tập thực hành
+# Lab 04 — Quản lý bản nháp bằng session và cookie
 
-Kho mã chứa 3 bài thực hành môn **Phát triển phần mềm mã nguồn mở** của nhóm 9. Mỗi bài nằm trên một **branch riêng** để giữ lịch sử commit độc lập theo yêu cầu nộp bài.
+Mã mẫu cho phần hướng dẫn và mã khởi đầu cho bài tự làm.
 
-## Danh sách bài
+## Mở bài
 
-| Bài | Tên đề tài | Branch | Xem trên GitHub |
-| --- | --- | --- | --- |
-| Lab 01 | Vận hành dự án trên Linux và viết shell script | [`lab1`](../../tree/lab1) | [Mở branch lab1](../../tree/lab1) |
-| Lab 02 | Xây dựng module PHP kiểm tra điều kiện đăng ký | [`lab2`](../../tree/lab2) | [Mở branch lab2](../../tree/lab2) |
-| Lab 03 | Hiển thị sự kiện, tìm kiếm và xử lý form | [`lab3`](../../tree/lab3) | [Mở branch lab3](../../tree/lab3) |
-
-> **Mặc định GitHub đang mở branch `main`.** Hãy chuyển sang branch tương ứng ở góc trên bên trái (nút branch dropdown) để xem mã nguồn của từng bài.
-
-## Cách chuyển branch
-
-Trên giao diện GitHub: nhìn lên đầu trang, ngay phía trên danh sách file, có nút hiển thị branch hiện tại (mặc định là `main`). Bấm vào đó rồi chọn `lab1`, `lab2` hoặc `lab3`.
-
-Trên terminal (sau khi clone):
+Mở terminal Ubuntu/WSL tại thư mục chứa `lab.sh`. Dùng PHP từ 8.1 và Git. Hướng dẫn chi tiết, sơ đồ, đoạn mã cần sửa, dữ liệu đối chiếu và rubric nằm trong tài liệu của bài lab.
 
 ```bash
-git clone https://github.com/TranDaiHiep2006/PTPMMNM-CNTT-1810-NHOM-9.git
-cd PTPMMNM-CNTT-1810-NHOM-9
-git checkout lab1   # hoặc lab2, lab3
+bash lab.sh check
+bash lab.sh run
 ```
 
-## Tóm tắt nội dung từng bài
+Mở http://127.0.0.1:8104. Giữ terminal máy chủ hoạt động; dùng terminal thứ hai để kiểm thử. Nhấn Ctrl+C để dừng.
 
-### Lab 01 — Vận hành dự án trên Linux và shell script *(branch `lab1`)*
+Bài này không cần PostgreSQL, Composer hoặc framework.
 
-Làm quen với môi trường dòng lệnh Ubuntu/WSL, chạy shell script `lab.sh`, kiểm tra môi trường và chạy chương trình PHP mẫu trên cổng `8101`.
-
-### Lab 02 — Module PHP kiểm tra điều kiện đăng ký *(branch `lab2`)*
-
-Hoàn thiện lớp `RegistrationPolicy` kiểm tra điều kiện đăng ký sự kiện (dung lượng, sự kiện đóng/mở, danh sách chờ) và bộ kiểm thử biên. Máy chủ chạy trên cổng `8102`.
-
-### Lab 03 — Hiển thị sự kiện, tìm kiếm và xử lý form *(branch `lab3`)*
-
-Trang danh sách sự kiện có bộ lọc kết hợp theo **từ khóa + loại + còn chỗ** (AND), Form đăng ký kiểm tra phía máy chủ và hiển thị bản xem trước. Máy chủ chạy trên cổng `8103`.
+## Kiểm tra bài
 
 ```bash
-bash lab.sh check   # kiểm tra môi trường
-bash lab.sh test    # kiểm thử phần mẫu
-bash lab.sh extend  # kiểm thử phần mở rộng
+bash lab.sh test
+bash lab.sh extend
 ```
 
-## Công cụ chung
+`test` kiểm tra phần mẫu; `extend` kiểm tra phần tự làm. Các vị trí TODO là nhiệm vụ cần hoàn thiện; không sửa test để bỏ qua lỗi.
 
-- PHP 8.1 trở lên
-- Git
-- Terminal Ubuntu hoặc Ubuntu trong WSL
+Kết quả mở rộng cần đạt: `TESTS=7 FAILED=0`. Có luồng nhập, xem lại, sửa, hủy và hoàn tất mô phỏng; bản nháp sai hoặc hết hạn bị từ chối; các phiên sử dụng và tùy chọn giao diện tách biệt.
 
-## Thành viên
+## Tệp nộp
 
-Nhóm 9 — CNTT 1810.
+Giữ mã nguồn, dữ liệu mẫu và kiểm thử. Ghi lại lệnh chạy trong README. Không đưa `.local`, mật khẩu hoặc dữ liệu cá nhân thật vào kho mã và gói nộp. Nộp đúng commit theo yêu cầu của bài; nếu dùng Actions, đính kèm lần chạy tương ứng.
+
+
+## Phần trình bày giao diện
+
+Lab này giữ CSS cục bộ tại `public/assets/css/app.css`. HTML nằm trong `public/`; các lab có nhiều trang dùng `templates/header.php` và `templates/footer.php`. Có thể lần từ các lớp `form-field`, `event-item`, `error-summary` sang CSS để đọc cách trình bày; Lab01 chỉ dùng phần trang giới thiệu.
+
+Các lớp, nhãn và bố cục chỉ phục vụ hiển thị. Giữ nguyên khối PHP, GET/POST, tên trường, giá trị option, hidden input và thuộc tính kiểm tra đầu vào khi thực hành. Không cần JavaScript, thư viện hoặc bước build mới để chạy giao diện.
+
+
+## Giao diện Material 3
+
+Màu và kiểu chữ nằm trong `public/assets/css/tokens.css`; bố cục trong `app.css`. Không có bước build hoặc thư viện mới.
+
+Ba lớp được tách rõ:
+
+- `/`: sự kiện gốc của lab; tập kết quả, bộ lọc và form nghiệp vụ giữ nguyên.
+- `/event.php?id=1`: chi tiết chỉ đọc, bổ sung metadata hư cấu từ `data/event-content.php`. CTA mở `/register.php` không kèm tham số mới.
+- `/ui-demo.php`: sáu sự kiện hư cấu, ID `demo-...` từ `data/ui-demo-events.php`. `/ticket-preview.php?id=demo-open-source` chỉ thử vé/ghế trong bộ nhớ trang, không có form hoặc API ghi dữ liệu.
+
+Khu thử có 96 ghế cố định, 68 khả dụng (16 VIP và 52 Tiêu chuẩn). Hai vé VIP mẫu 350.000 đồng cho tổng 700.000 đồng. Đổi hạng, đổi sự kiện hoặc tải lại sẽ bỏ lựa chọn không phù hợp; không có trạng thái đã giữ chỗ.
+
+Ảnh SVG tự tạo, lưu cục bộ và ghi quyền CC0 trong `public/assets/images/LICENSE.txt`. `presentation.js` chỉ xử lý ảnh lỗi; `ticket-preview.js` chỉ chạy trên trang thử. Khi tắt JavaScript, vẫn đọc được nội dung và dùng form lab như cũ; khu chọn thử được khóa kèm giải thích.
+
+Không đưa ID demo, vé hoặc ghế vào form, Session, Cookie, CSDL hoặc test cũ. TODO sinh viên và đáp án giữ nguyên khác biệt. Không có backend bán vé, thanh toán hoặc gửi email.
